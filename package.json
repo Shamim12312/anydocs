@@ -1,6 +1,6 @@
 {
   "name": "@cle-does-things/anydocs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI tool to fetch any documentation you need for your vibe coding project",
   "main": "index.js",
   "scripts": {
