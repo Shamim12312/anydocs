@@ -19,7 +19,7 @@ var rootCmd = &cobra.Command{
 	Short: "anydocs is a CLI tool for fetching documentations from any endpoint returning plain text.",
 	Long:  "anydocs is a CLI tool for fetching documentations from any endpoint returning plain text: it is designed to save the content of these documents into instructions files for local coding agents (like CLAUDE.md or AGENTS.md)",
 	Run: func(cmd *cobra.Command, args []string) {
-		logo := figure.NewColorFigure("anydocs", "larry3d", "red", true)
+		logo := figure.NewColorFigure("anydocs", "larry3d", "white", true)
 		logo.Print()
 		cmd.Help()
 	},
@@ -42,7 +42,7 @@ var fetchCmd = &cobra.Command{
 	Short:   "Fetch documentation content",
 	Long:    "Fetch documentation contant by passing the endpoint URLs (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).",
 	Run: func(cmd *cobra.Command, args []string) {
-		logo := figure.NewColorFigure("anydocs", "larry3d", "red", true)
+		logo := figure.NewColorFigure("anydocs", "larry3d", "white", true)
 		logo.Print()
 
 		if urls == "" {
