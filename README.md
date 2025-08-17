@@ -27,11 +27,10 @@ npm install @cle-does-things/anydocs
 3. Downloading the executable from the [releases page](https://github.com/AstraBert/anydocs/releases): you can download it directly from the GitHub repository or, if you do not want to leave your terminal, you can use `curl`:
 
 ```bash
-# assuming you are on a Linux OS with an AMD64 processor, like Ubuntu, you would run:
-curl -L -o workflows-quickstart https://github.com/run-llama/workflows-quickstart/releases/download/<version>/workflows-quickstart-linux-amd64
+curl -L -o anydocs https://github.com/AstraBert/anydocs/releases/download/<version>/anydocs_<version>_<OS>_<processor>.tar.gz ## e.g. https://github.com/AstraBert/anydocs/releases/download/0.1.1/anydocs_0.1.1_darwin_amd64.tar.gz
 
 # make sure the downloaded binary is executable (not needed for Windows)
-chmod +x workflows-quickstart
+chmod +x anydocs
 ```
 
 In this last case, be careful to specify your OS (supported: linux, windows, macos) and your processor type (supported: amd, arm).
