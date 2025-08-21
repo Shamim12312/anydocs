@@ -40,7 +40,7 @@ var fetchCmd = &cobra.Command{
 	Use:     "fetch",
 	Aliases: []string{"f"},
 	Short:   "Fetch documentation content",
-	Long:    "Fetch documentation contant by passing the endpoint URLs (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).",
+	Long:    "Fetch documentation content by passing the endpoint URLs (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).",
 	Run: func(cmd *cobra.Command, args []string) {
 		logo := figure.NewColorFigure("anydocs", "larry3d", "white", true)
 		logo.Print()
@@ -82,13 +82,75 @@ var fetchCmd = &cobra.Command{
 	},
 }
 
+var pathGh string
+var urlsGh string
+var summaryGh bool
+
+var ghCmd = &cobra.Command{
+	Use:     "gh",
+	Aliases: []string{"g"},
+	Short:   "Fetch documentation content from any GitHub URL",
+	Long:    "Fetch documentation content by passing URLs of GitHub files (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).",
+	Run: func(cmd *cobra.Command, args []string) {
+		logo := figure.NewColorFigure("anydocs", "larry3d", "white", true)
+		logo.Print()
+
+		if urlsGh == "" {
+			fmt.Fprintf(os.Stderr, "Error: URLs are required. Use -u or --urls flag.\n")
+			os.Exit(1)
+		}
+		if pathGh == "" {
+			fmt.Fprintf(os.Stderr, "Error: Path is required. Use -p or --path flag.\n")
+			os.Exit(1)
+		}
+
+		splitGh := strings.Split(urlsGh, ",")
+		for i, url := range splitGh {
+			newUrl := strings.TrimSpace(url)
+			if strings.HasPrefix(newUrl, "https://github.com/") {
+				newUrl = docs.GhToRawUrl(newUrl)
+				splitGh[i] = newUrl
+			} else {
+				rich.Warning("URL: '" + newUrl + "' is not a GitHub URL: use 'fetch' for it.")
+				rich.Warning("Skipping...")
+			}
+		}
+		s := spinner.New(spinner.CharSets[11], 1*time.Millisecond)
+		s.Start()
+		content := docs.FetchMany(splitGh)
+		if summary {
+			summary, err := ai.AnthropicResponse(content)
+			if err != nil {
+				rich.Error("There was an error while producing the AI summary, defaulting to writing the whole fetched content.\nError: " + err.Error() + "❌")
+			} else {
+				rich.Info("AI summary successfully produced✅")
+				content = summary
+			}
+		}
+		fileError := docs.WriteFileContent(pathGh, content)
+		if fileError != nil {
+			s.Stop()
+			os.Exit(1)
+		} else {
+			s.Stop()
+			os.Exit(0)
+		}
+	},
+}
+
 func init() {
 	fetchCmd.Flags().StringVarP(&urls, "urls", "u", "", "Pass a set of llms.txt endpoints, comma separated (e.g. 'https://docs.llamaindex.ai/en/latest/llms.txt,https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md')")
 	fetchCmd.Flags().StringVarP(&path, "path", "p", "", "Pass the path you want to save your files at")
 	fetchCmd.Flags().BoolVarP(&summary, "summary", "s", false, "Use this flag if you want to enable AI summary of fetched documentation.")
+	ghCmd.Flags().StringVarP(&urlsGh, "urls", "u", "", "Pass a set of llms.txt endpoints, comma separated (e.g. 'https://docs.llamaindex.ai/en/latest/llms.txt,https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md')")
+	ghCmd.Flags().StringVarP(&pathGh, "path", "p", "", "Pass the path you want to save your files at")
+	ghCmd.Flags().BoolVarP(&summaryGh, "summary", "s", false, "Use this flag if you want to enable AI summary of fetched documentation.")
 
 	fetchCmd.MarkFlagRequired("urls")
 	fetchCmd.MarkFlagRequired("path")
+	ghCmd.MarkFlagRequired("urls")
+	ghCmd.MarkFlagRequired("path")
 
 	rootCmd.AddCommand(fetchCmd)
+	rootCmd.AddCommand(ghCmd)
 }

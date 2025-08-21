@@ -48,3 +48,21 @@ func TestWriteFileContent(t *testing.T) {
 		os.Remove(tc.filePath)
 	}
 }
+
+func TestGhToRawUrl(t *testing.T) {
+	var testCases = []struct {
+		url  string
+		want string
+	}{
+		{"https://github.com/AstraBert/PdfItDown/blob/main/README.md", "https://raw.githubusercontent.com/AstraBert/PdfItDown/main/README.md"},
+		{"https://github.com/AstraBert/PdfItDown/blob/main/tests/test_llamaparse.py", "https://raw.githubusercontent.com/AstraBert/PdfItDown/main/tests/test_llamaparse.py"},
+		{"https://github.com/AstraBert/anydocs/tree/main/README.md", "https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md"},
+		{"https://github.com/AstraBert/anydocs/tree/main/LICENSE", "https://raw.githubusercontent.com/AstraBert/anydocs/main/LICENSE"},
+	}
+	for _, tc := range testCases {
+		result := GhToRawUrl(tc.url)
+		if result != tc.want {
+			t.Errorf("Error while testing GhToRawUrl: want %s, got %s", tc.want, result)
+		}
+	}
+}
