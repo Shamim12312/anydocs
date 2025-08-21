@@ -37,9 +37,11 @@ In this last case, be careful to specify your OS (supported: linux, windows, mac
 
 ## Run
 
-**anydocs** has one command, `fetch`.
+**anydocs** has two commands, `fetch` and `gh`.
 
-Here is the manual:
+### `fetch`
+
+**Manual**
 
 ```text
 Fetch documentation contant by passing the endpoint URLs (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).
@@ -57,7 +59,7 @@ Flags:
   -u, --urls string   Pass a set of llms.txt endpoints, comma separated (e.g. 'https://docs.llamaindex.ai/en/latest/llms.txt,https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md')
 ```
 
-You can run, for example:
+**Example Usage**
 
 ```bash
 # with AI summary
@@ -66,10 +68,38 @@ anydocs fetch --urls 'https://raw.githubusercontent.com/AstraBert/anydocs/main/R
 anydocs fetch --urls 'https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md' --path CLAUDE.md
 ```
 
+## `gh`
+
+**Manual**
+
+```text
+Fetch documentation content by passing URLs of GitHub files (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).
+
+Usage:
+  anydocs gh [flags]
+
+Aliases:
+  gh, g
+
+Flags:
+  -h, --help          help for gh
+  -p, --path string   Pass the path you want to save your files at
+  -s, --summary       Use this flag if you want to enable AI summary of fetched documentation.
+  -u, --urls string   Pass a set of GitHub URLs, comma separated (e.g. 'https://github.com/AstraBert/PdfItDown/blob/main/README.md,https://github.com/AstraBert/anydocs/tree/main/README.md')
+```
+
+**Example Usage**
+
+```bash
+anydocs gh --urls 'https://github.com/AstraBert/anydocs/blob/main/README.md' --path CLAUDE.md
+# with AI summary:
+anydocs gh --urls 'https://github.com/AstraBert/anydocs/blob/main/README.md' --path CLAUDE.md --summary
+```
+
 ## Contributing
 
-We welcome contributions! Please read our [Contributing Guide](../CONTRIBUTING.md) to get started.
+We welcome contributions! Please read our [Contributing Guide](./CONTRIBUTING.md) to get started.
 
 ## License
 
-This project is licensed under the [MIT License](../LICENSE)
+This project is licensed under the [MIT License](./LICENSE)

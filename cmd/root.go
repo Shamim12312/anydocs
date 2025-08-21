@@ -142,7 +142,7 @@ func init() {
 	fetchCmd.Flags().StringVarP(&urls, "urls", "u", "", "Pass a set of llms.txt endpoints, comma separated (e.g. 'https://docs.llamaindex.ai/en/latest/llms.txt,https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md')")
 	fetchCmd.Flags().StringVarP(&path, "path", "p", "", "Pass the path you want to save your files at")
 	fetchCmd.Flags().BoolVarP(&summary, "summary", "s", false, "Use this flag if you want to enable AI summary of fetched documentation.")
-	ghCmd.Flags().StringVarP(&urlsGh, "urls", "u", "", "Pass a set of llms.txt endpoints, comma separated (e.g. 'https://docs.llamaindex.ai/en/latest/llms.txt,https://raw.githubusercontent.com/AstraBert/anydocs/main/README.md')")
+	ghCmd.Flags().StringVarP(&urlsGh, "urls", "u", "", "Pass a set of GitHub URLs, comma separated (e.g. 'https://github.com/AstraBert/PdfItDown/blob/main/README.md,https://github.com/AstraBert/anydocs/tree/main/README.md')")
 	ghCmd.Flags().StringVarP(&pathGh, "path", "p", "", "Pass the path you want to save your files at")
 	ghCmd.Flags().BoolVarP(&summaryGh, "summary", "s", false, "Use this flag if you want to enable AI summary of fetched documentation.")
 
