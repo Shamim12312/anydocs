@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/rvfet/rich-go"
@@ -78,4 +79,11 @@ func WriteFileContent(pathToFile, content string) error {
 		rich.Info("File " + pathToFile + " successfully written!✅")
 	}
 	return errFlWrt
+}
+
+func GhToRawUrl(url string) string {
+	url = strings.ReplaceAll(url, "github.com", "raw.githubusercontent.com")
+	url = strings.ReplaceAll(url, "/blob/", "/")
+	url = strings.ReplaceAll(url, "/tree/", "/")
+	return url
 }
