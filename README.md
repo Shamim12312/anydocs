@@ -44,7 +44,7 @@ In this last case, be careful to specify your OS (supported: linux, windows, mac
 **Manual**
 
 ```text
-Fetch documentation contant by passing the endpoint URLs (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).
+Fetch documentation content by passing the endpoint URLs (comma-separated, flag -u,--urls) and the path to which you would like to save this documentation (flag -p, --path). Optionally, you can also decide to produce an AI summary of the documentation (flag -s, --summary).
 
 Usage:
   anydocs fetch [flags]
